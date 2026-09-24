@@ -25,11 +25,11 @@ body{
 .screen.is-active{ display:block; }
 
 /* ---------- 画面1: ログイン ---------- */
-#screen-login{ background:#000; }
+#screen-login{ background:#000; overflow:hidden; }
 #login-video{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover;
+  position:absolute; top:50%; left:0;
+  width:100%; height:auto;
+  transform:translateY(-50%);
   opacity:.75;
 }
 .login-overlay{
@@ -130,9 +130,11 @@ body{
 .gacha-btn:disabled{ opacity:.5; cursor:default; box-shadow:none; }
 
 /* ---------- 画面3: ガチャ演出 ---------- */
-.gacha-screen{ background:#000; }
+.gacha-screen{ background:#000; overflow:hidden; }
 #gacha-video{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  position:absolute; top:50%; left:0;
+  width:100%; height:auto;
+  transform:translateY(-50%);
 }
 .gacha-reveal{
   position:absolute; inset:0;
@@ -216,6 +218,20 @@ body{
   position:absolute; inset:0;
   background:rgba(5,2,1,.82);
 }
+.char-card.is-acquired{ cursor:pointer; }
+.char-card.is-acquired::before{
+  content:"▶";
+  position:absolute; top:8px; right:8px;
+  width:1.8rem; height:1.8rem;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(214,165,60,.9);
+  color:#2a1712;
+  border-radius:50%;
+  font-size:.8rem;
+  z-index:2;
+}
+.char-card.is-acquired:active{ transform:scale(.97); }
+.char-card.is-locked{ cursor:default; }
 .char-card .char-name{
   position:absolute; inset:0;
   display:flex; align-items:center; justify-content:center;

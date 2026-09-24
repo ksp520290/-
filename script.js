@@ -21,7 +21,7 @@ const OUEN_VIDEOS = [
 
 const LOGIN_TARGET = new Date("2026-10-10T00:00:00");
 const MAIN_TARGET = new Date("2026-10-03T00:00:00");
-const GRADUATION_TARGET = new Date("2027-03-16T00:00:00");
+const GRADUATION_TARGET = new Date("2026-03-16T00:00:00");
 
 function daysUntil(target){
   const now = new Date();
@@ -86,6 +86,31 @@ const gachaSubtitle = document.getElementById("gacha-subtitle");
 const gachaAudio = document.getElementById("gacha-audio");
 const gachaSkip = document.getElementById("gacha-skip");
 
+// 獲得済みキャラクターの管理(端末に保存され、次回訪問時も引き継がれる)
+const ACQUIRED_KEY = "ouenGachaAcquired";
+
+function loadAcquired(){
+  try {
+    return new Set(JSON.parse(localStorage.getItem(ACQUIRED_KEY) || "[]"));
+  } catch (e){
+    return new Set();
+  }
+}
+
+const acquiredSet = loadAcquired();
+
+function isAcquired(c){
+  return acquiredSet.has(c.name);
+}
+
+function acquireCharacter(c){
+  if (acquiredSet.has(c.name)) return;
+  acquiredSet.add(c.name);
+  try {
+    localStorage.setItem(ACQUIRED_KEY, JSON.stringify([...acquiredSet]));
+  } catch (e){}
+}
+
 // 現在のガチャ演出の段階("video"=応援動画再生中 / "audio"=セリフ再生中)
 let gachaPhase = "video";
 
@@ -107,11 +132,11 @@ function runGacha(){
   gachaVideo.play().catch(() => {});
 }
 
-function revealCharacter(){
+// 画像・名前・字幕・音声をセットしてリベール演出を再生する(通常のガチャ結果表示にも、一覧画面からの再視聴にも共通で使う)
+function showReveal(chosen){
   gachaVideo.pause();
   gachaVideo.style.display = "none";
 
-  const chosen = pickRandom(CHARACTERS);
   gachaImage.src = chosen.img;
   gachaName.textContent = chosen.name;
   gachaAudio.src = chosen.audio;
@@ -135,6 +160,18 @@ function revealCharacter(){
   gachaReveal.classList.add("is-visible");
   gachaAudio.currentTime = 0;
   gachaAudio.play().catch(() => {});
+}
+
+function revealCharacter(){
+  const chosen = pickRandom(CHARACTERS);
+  acquireCharacter(chosen);
+  showReveal(chosen);
+}
+
+// キャラ一覧画面から獲得済みキャラをタップした時の再視聴
+function previewCharacter(chosen){
+  showScreen("screen-gacha");
+  showReveal(chosen);
 }
 
 function finishGacha(){
@@ -164,13 +201,19 @@ const backBtn = document.getElementById("back-btn");
 function showCharacterList(){
   listGrid.innerHTML = "";
   CHARACTERS.forEach(c => {
+    const acquired = isAcquired(c);
     const card = document.createElement("div");
-    card.className = "char-card";
+    card.className = "char-card " + (acquired ? "is-acquired" : "is-locked");
     card.style.backgroundImage = `url("${c.img}")`;
     const label = document.createElement("span");
     label.className = "char-name";
     label.textContent = c.name;
     card.appendChild(label);
+    if (acquired){
+      card.setAttribute("role", "button");
+      card.setAttribute("tabindex", "0");
+      card.addEventListener("click", () => previewCharacter(c));
+    }
     listGrid.appendChild(card);
   });
   showScreen("screen-list");
