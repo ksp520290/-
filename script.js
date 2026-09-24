@@ -21,7 +21,7 @@ const OUEN_VIDEOS = [
 
 const LOGIN_TARGET = new Date("2026-10-10T00:00:00");
 const MAIN_TARGET = new Date("2026-10-03T00:00:00");
-const GRADUATION_TARGET = new Date("2027-03-16T00:00:00");
+const GRADUATION_TARGET = new Date("2026-12-22T00:00:00");
 
 function daysUntil(target){
   const now = new Date();
