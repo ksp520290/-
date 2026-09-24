@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>応援ガチャ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Antique+B1&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 画面1: ログイン -->
+  <section id="screen-login" class="screen is-active">
+    <video id="login-video" src="ouengassen.mp4" playsinline></video>
+    <div class="login-overlay">
+      <p class="login-eyebrow">本番まで</p>
+      <p class="login-countdown"><span id="login-days">--</span><span class="unit">日</span></p>
+      <p class="login-date">2026/10/10</p>
+    </div>
+    <button id="start-btn" class="start-btn">タップして開始</button>
+    <button id="login-skip" class="skip-btn" hidden>スキップ</button>
+  </section>
+
+  <!-- 画面2: メイン -->
+  <section id="screen-main" class="screen">
+    <div class="banner banner-count">
+      <p class="banner-label">競技大会まであと</p>
+      <p class="banner-number"><span id="main-days">--</span><span class="unit">日</span></p>
+    </div>
+    <div class="banner banner-gacha">
+      <button id="gacha-btn" class="gacha-btn">ガチャを引く</button>
+    </div>
+    <div class="banner banner-blank">
+      <p class="banner-label">卒業式まであと</p>
+      <p class="banner-number"><span id="graduation-days">--</span><span class="unit">日</span></p>
+    </div>
+  </section>
+
+  <!-- 画面3: ガチャ演出 -->
+  <section id="screen-gacha" class="screen gacha-screen">
+    <video id="gacha-video" playsinline></video>
+    <div id="gacha-reveal" class="gacha-reveal">
+      <img id="gacha-image" src="" alt="">
+      <p id="gacha-name" class="gacha-name"></p>
+      <p id="gacha-subtitle" class="gacha-subtitle" hidden></p>
+      <audio id="gacha-audio"></audio>
+    </div>
+    <button id="gacha-skip" class="skip-btn" hidden>スキップ</button>
+  </section>
+
+  <!-- 画面4: キャラ一覧 -->
+  <section id="screen-list" class="screen">
+    <header class="list-header">
+      <h1>キャラ一覧</h1>
+      <button id="back-btn" class="back-btn">メインへ戻る</button>
+    </header>
+    <div id="list-grid" class="list-grid"></div>
+  </section>
+
+<script src="script.js"></script>
+</body>
+</html>
