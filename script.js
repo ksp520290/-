@@ -19,8 +19,8 @@ const OUEN_VIDEOS = [
   "ouen/ouen6.mp4",
 ];
 
-const LOGIN_TARGET = new Date("2026-10-10T00:00:00");
-const MAIN_TARGET = new Date("2026-10-03T00:00:00");
+const LOGIN_TARGET = new Date("2026-10-03T00:00:00");
+const MAIN_TARGET = new Date("2026-10-10T00:00:00");
 const GRADUATION_TARGET = new Date("2026-12-22T00:00:00");
 
 function daysUntil(target){
